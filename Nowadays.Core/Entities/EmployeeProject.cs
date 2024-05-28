@@ -1,7 +1,7 @@
 ﻿
 namespace Nowadays.Core.Entities;
 
-public class EmployeeProject : BaseEntity
+public class EmployeeProject : IEntity
 {
     public int EmployeeId { get; set; }
     public Employee Employee { get; set; }
