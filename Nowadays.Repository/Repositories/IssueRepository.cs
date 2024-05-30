@@ -1,7 +1,8 @@
-﻿using Nowadays.Core.Interfaces.Repositories;
+﻿using Nowadays.Core.Entities;
+using Nowadays.Repository.Context;
 
 namespace Nowadays.Repository.Repositories;
 
-public class IssueRepository : IIssueRepository
+public class IssueRepository(AppDbContext context) : GenericRepository<Issue>(context)
 {
 }

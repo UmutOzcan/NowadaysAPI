@@ -1,7 +1,8 @@
-﻿using Nowadays.Core.Interfaces.Repositories;
+﻿using Nowadays.Core.Entities;
+using Nowadays.Repository.Context;
 
 namespace Nowadays.Repository.Repositories;
 
-public class CompanyRepository : ICompanyRepository
+public class CompanyRepository(AppDbContext context) : GenericRepository<Company>(context)
 {
 }

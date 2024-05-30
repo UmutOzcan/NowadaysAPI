@@ -1,5 +1,7 @@
-﻿namespace Nowadays.Core.Interfaces.Repositories; 
+﻿using Nowadays.Core.Entities;
 
-public interface IEmployeeRepository
+namespace Nowadays.Core.Interfaces.Repositories; 
+
+public interface IEmployeeRepository : IGenericRepository<Employee>
 {
 }

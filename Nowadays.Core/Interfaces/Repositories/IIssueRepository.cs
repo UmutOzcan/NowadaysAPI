@@ -1,5 +1,7 @@
-﻿namespace Nowadays.Core.Interfaces.Repositories;
+﻿using Nowadays.Core.Entities;
 
-public interface IIssueRepository
+namespace Nowadays.Core.Interfaces.Repositories;
+
+public interface IIssueRepository : IGenericRepository<Issue>
 {
 }
