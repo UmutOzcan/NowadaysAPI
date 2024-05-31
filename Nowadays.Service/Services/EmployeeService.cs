@@ -12,14 +12,21 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly INationalIdentityVerificationService _nationalIdentityVerificationService;
 
-    public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper)
+    public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper, INationalIdentityVerificationService nationalIdentityVerificationService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _nationalIdentityVerificationService = nationalIdentityVerificationService;
     }
     public async Task EmployeeAdd(CreateEmployeeRequest employee)
     {
+        if (!await _nationalIdentityVerificationService.VerifyIdentityAsync(employee.NationalIdentity, employee.FirstName, employee.LastName, employee.DateOfBirth))
+        {
+            throw new Exception("Invalid TC Kimlik No");
+        }
+
         var newEmployee = _mapper.Map<CreateEmployeeRequest, Employee>(employee);
 
         await _unitOfWork.EmployeeRepository.InsertAsync(newEmployee);

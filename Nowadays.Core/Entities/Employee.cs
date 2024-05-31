@@ -2,8 +2,8 @@
 
 public class Employee : BaseEntity
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public long NationalIdentity { get; set; }
     public int DateOfBirth { get; set; }
 

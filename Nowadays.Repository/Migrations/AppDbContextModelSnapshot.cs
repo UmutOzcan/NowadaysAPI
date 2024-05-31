@@ -84,9 +84,16 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(1278),
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1472),
                             IsActive = true,
                             Name = "PortalGroup"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1485),
+                            IsActive = true,
+                            Name = "Garanti BBVA"
                         });
                 });
 
@@ -132,7 +139,7 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2440),
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2552),
                             DateOfBirth = 2000,
                             FirstName = "Umut",
                             IsActive = true,
@@ -142,7 +149,7 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2445),
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2560),
                             DateOfBirth = 1995,
                             FirstName = "Ahmet",
                             IsActive = true,
@@ -192,7 +199,7 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(3357),
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(3437),
                             Description = "Check for bugs",
                             IsActive = true,
                             Name = "Fix Bug",
@@ -242,7 +249,7 @@ namespace Nowadays.Repository.Migrations
                         {
                             Id = 1,
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(4237),
+                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(4286),
                             Description = "Musteri Takip Projesi",
                             IsActive = true,
                             Name = "MusteriTakip"

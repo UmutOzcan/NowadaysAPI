@@ -18,6 +18,15 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 
         };
 
-        builder.HasData(company1);
+        Company company2 = new()
+        {
+            Id = 2,
+            Name = "Garanti BBVA",
+            CreatedDate = DateTime.Now,
+            IsActive = true,
+
+        };
+
+        builder.HasData(company1,company2);
     }
 }

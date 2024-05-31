@@ -151,26 +151,30 @@ namespace Nowadays.Repository.Migrations
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "ModifiedDate", "Name" },
-                values: new object[] { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(1278), null, true, null, "PortalGroup" });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1472), null, true, null, "PortalGroup" },
+                    { 2, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1485), null, true, null, "Garanti BBVA" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Employees",
                 columns: new[] { "Id", "CreatedDate", "DateOfBirth", "DeletedDate", "FirstName", "IsActive", "LastName", "ModifiedDate", "NationalIdentity" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2440), 2000, null, "Umut", true, "Ozcan", null, 1234567890L },
-                    { 2, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2445), 1995, null, "Ahmet", true, "Yılmaz", null, 1234567899L }
+                    { 1, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2552), 2000, null, "Umut", true, "Ozcan", null, 1234567890L },
+                    { 2, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2560), 1995, null, "Ahmet", true, "Yılmaz", null, 1234567899L }
                 });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "Id", "CompanyId", "CreatedDate", "DeletedDate", "Description", "IsActive", "ModifiedDate", "Name" },
-                values: new object[] { 1, 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(4237), null, "Musteri Takip Projesi", true, null, "MusteriTakip" });
+                values: new object[] { 1, 1, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(4286), null, "Musteri Takip Projesi", true, null, "MusteriTakip" });
 
             migrationBuilder.InsertData(
                 table: "Issues",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsActive", "ModifiedDate", "Name", "ProjectId" },
-                values: new object[] { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(3357), null, "Check for bugs", true, null, "Fix Bug", 1 });
+                values: new object[] { 1, new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(3437), null, "Check for bugs", true, null, "Fix Bug", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeIssue_IssuesId",
