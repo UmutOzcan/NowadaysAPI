@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nowadays.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class initialize : Migration
+    public partial class reinitialize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,6 @@ namespace Nowadays.Repository.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NationalIdentity = table.Column<long>(type: "bigint", nullable: false),
                     DateOfBirth = table.Column<int>(type: "int", nullable: false),
-                    CompanyId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -49,12 +48,6 @@ namespace Nowadays.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,25 +76,27 @@ namespace Nowadays.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeProjects",
+                name: "EmployeeProject",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                    EmployeesId = table.Column<int>(type: "int", nullable: false),
+                    ProjectsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeProjects", x => new { x.EmployeeId, x.ProjectId });
+                    table.PrimaryKey("PK_EmployeeProject", x => new { x.EmployeesId, x.ProjectsId });
                     table.ForeignKey(
-                        name: "FK_EmployeeProjects_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeeProject_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
                         principalTable: "Employees",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeProjects_Projects_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_EmployeeProject_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,24 +125,24 @@ namespace Nowadays.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IssueEmployees",
+                name: "EmployeeIssue",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    IssueId = table.Column<int>(type: "int", nullable: false)
+                    EmployeesId = table.Column<int>(type: "int", nullable: false),
+                    IssuesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IssueEmployees", x => new { x.IssueId, x.EmployeeId });
+                    table.PrimaryKey("PK_EmployeeIssue", x => new { x.EmployeesId, x.IssuesId });
                     table.ForeignKey(
-                        name: "FK_IssueEmployees_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeeIssue_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_IssueEmployees_Issues_IssueId",
-                        column: x => x.IssueId,
+                        name: "FK_EmployeeIssue_Issues_IssuesId",
+                        column: x => x.IssuesId,
                         principalTable: "Issues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -156,41 +151,36 @@ namespace Nowadays.Repository.Migrations
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "ModifiedDate", "Name" },
-                values: new object[] { 1, new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(5432), null, true, null, "PortalGroup" });
+                values: new object[] { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(1278), null, true, null, "PortalGroup" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "Id", "CompanyId", "CreatedDate", "DateOfBirth", "DeletedDate", "FirstName", "IsActive", "LastName", "ModifiedDate", "NationalIdentity" },
+                columns: new[] { "Id", "CreatedDate", "DateOfBirth", "DeletedDate", "FirstName", "IsActive", "LastName", "ModifiedDate", "NationalIdentity" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(6683), 2000, null, "Umut", true, "Ozcan", null, 1234567890L },
-                    { 2, 1, new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(6687), 1995, null, "Ahmet", true, "Yılmaz", null, 1234567899L }
+                    { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2440), 2000, null, "Umut", true, "Ozcan", null, 1234567890L },
+                    { 2, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2445), 1995, null, "Ahmet", true, "Yılmaz", null, 1234567899L }
                 });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "Id", "CompanyId", "CreatedDate", "DeletedDate", "Description", "IsActive", "ModifiedDate", "Name" },
-                values: new object[] { 1, 1, new DateTime(2024, 5, 28, 18, 38, 7, 277, DateTimeKind.Local).AddTicks(9160), null, "Musteri Takip Projesi", true, null, "MusteriTakip" });
+                values: new object[] { 1, 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(4237), null, "Musteri Takip Projesi", true, null, "MusteriTakip" });
 
             migrationBuilder.InsertData(
                 table: "Issues",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsActive", "ModifiedDate", "Name", "ProjectId" },
-                values: new object[] { 1, new DateTime(2024, 5, 28, 18, 38, 7, 277, DateTimeKind.Local).AddTicks(2838), null, "Check for bugs", true, null, "Fix Bug", 1 });
+                values: new object[] { 1, new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(3357), null, "Check for bugs", true, null, "Fix Bug", 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeProjects_ProjectId",
-                table: "EmployeeProjects",
-                column: "ProjectId");
+                name: "IX_EmployeeIssue_IssuesId",
+                table: "EmployeeIssue",
+                column: "IssuesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_CompanyId",
-                table: "Employees",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IssueEmployees_EmployeeId",
-                table: "IssueEmployees",
-                column: "EmployeeId");
+                name: "IX_EmployeeProject_ProjectsId",
+                table: "EmployeeProject",
+                column: "ProjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Issues_ProjectId",
@@ -207,16 +197,16 @@ namespace Nowadays.Repository.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EmployeeProjects");
+                name: "EmployeeIssue");
 
             migrationBuilder.DropTable(
-                name: "IssueEmployees");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
+                name: "EmployeeProject");
 
             migrationBuilder.DropTable(
                 name: "Issues");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Projects");

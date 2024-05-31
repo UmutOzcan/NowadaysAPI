@@ -1,7 +1,7 @@
 ﻿using Nowadays.Core.Entities;
 using Nowadays.Core.Interfaces.Repositories;
 
-namespace Nowadays.Core.Interfaces.UnitOfWork;
+namespace Nowadays.Core.Interfaces.UnitOfWorks;
 
 public interface IUnitOfWork : IDisposable
 {

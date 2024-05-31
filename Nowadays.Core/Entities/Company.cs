@@ -2,7 +2,6 @@
 
 public class Company : BaseEntity
 {
-    public string Name { get; set; }
-    public ICollection<Project> Projects { get; set; }  // OneToMany
-    public ICollection<Employee> Employees { get; set; }  // OneToMany
+    public string Name { get; set; } = string.Empty;
+    public ICollection<Project> Projects { get; set; }
 }

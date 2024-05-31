@@ -15,15 +15,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         table = context.Set<T>();
     }
 
-    public async Task AddAsync(T entity)
+    public async Task InsertAsync(T entity)
     {
-        table.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now);
+        entity.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now); // olusturulurken date set ederiz
+        entity.GetType().GetProperty("IsActive").SetValue(entity, true); // aktif et
         await table.AddAsync(entity);
         await context.SaveChangesAsync();
     }
 
     public async Task Delete(T entity)
     {
+        entity.GetType().GetProperty("IsActive").SetValue(entity, false); // inaktif yap ?
         context.Remove(entity);
         await context.SaveChangesAsync();
     }
@@ -50,7 +52,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<int> UpdateAsync(T entity)
     {
-        entity.GetType().GetProperty("UpdatedDate").SetValue(entity, DateTime.Now);
+        entity.GetType().GetProperty("ModifiedDate").SetValue(entity, DateTime.Now);
         table.Update(entity);
         return await context.SaveChangesAsync();
     }

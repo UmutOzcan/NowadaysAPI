@@ -10,8 +10,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Project> Projects { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Issue> Issues { get; set; }
-    public DbSet<IssueEmployee> IssueEmployees { get; set; }
-    public DbSet<EmployeeProject> EmployeeProjects { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

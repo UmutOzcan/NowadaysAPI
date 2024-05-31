@@ -10,7 +10,7 @@ public interface IGenericRepository<T> where T : class
     Task<T> GetWithWhereAsync(Expression<Func<T, bool>> filter);
     IQueryable<T> GetAll();
     //Task<IEnumerable<T>> GetWhereListAsync(Expression<Func<T, bool>> filter);
-    Task AddAsync(T entity);
+    Task InsertAsync(T entity);
     Task Delete(T entity);
     Task<int> UpdateAsync(T entity);
 

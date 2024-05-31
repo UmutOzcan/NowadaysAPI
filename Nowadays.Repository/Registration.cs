@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nowadays.Core.Interfaces.UnitOfWork;
+using Nowadays.Core.Interfaces.UnitOfWorks;
 using Nowadays.Repository.Context;
+using Nowadays.Repository.UnitOfWorks;
 
 namespace Nowadays.Repository;
 
@@ -14,6 +15,6 @@ public static class Registration
         services.AddDbContext<AppDbContext>(opt =>
         opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IUnitOfWork, IUnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

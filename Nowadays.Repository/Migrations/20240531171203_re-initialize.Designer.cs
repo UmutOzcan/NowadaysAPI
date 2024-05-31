@@ -12,8 +12,8 @@ using Nowadays.Repository.Context;
 namespace Nowadays.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240528153808_initialize")]
-    partial class initialize
+    [Migration("20240531171203_re-initialize")]
+    partial class reinitialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace Nowadays.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EmployeeIssue", b =>
+                {
+                    b.Property<int>("EmployeesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IssuesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesId", "IssuesId");
+
+                    b.HasIndex("IssuesId");
+
+                    b.ToTable("EmployeeIssue");
+                });
+
+            modelBuilder.Entity("EmployeeProject", b =>
+                {
+                    b.Property<int>("EmployeesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("EmployeeProject");
+                });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Company", b =>
                 {
@@ -57,7 +87,7 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(5432),
+                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(1278),
                             IsActive = true,
                             Name = "PortalGroup"
                         });
@@ -70,9 +100,6 @@ namespace Nowadays.Repository.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -102,16 +129,13 @@ namespace Nowadays.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.ToTable("Employees");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(6683),
+                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2440),
                             DateOfBirth = 2000,
                             FirstName = "Umut",
                             IsActive = true,
@@ -121,29 +145,13 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 2,
-                            CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 5, 28, 18, 38, 7, 276, DateTimeKind.Local).AddTicks(6687),
+                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(2445),
                             DateOfBirth = 1995,
                             FirstName = "Ahmet",
                             IsActive = true,
                             LastName = "Yılmaz",
                             NationalIdentity = 1234567899L
                         });
-                });
-
-            modelBuilder.Entity("Nowadays.Core.Entities.EmployeeProject", b =>
-                {
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeeId", "ProjectId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("EmployeeProjects");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Issue", b =>
@@ -187,27 +195,12 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 28, 18, 38, 7, 277, DateTimeKind.Local).AddTicks(2838),
+                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(3357),
                             Description = "Check for bugs",
                             IsActive = true,
                             Name = "Fix Bug",
                             ProjectId = 1
                         });
-                });
-
-            modelBuilder.Entity("Nowadays.Core.Entities.IssueEmployee", b =>
-                {
-                    b.Property<int>("IssueId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IssueId", "EmployeeId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("IssueEmployees");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Project", b =>
@@ -252,41 +245,41 @@ namespace Nowadays.Repository.Migrations
                         {
                             Id = 1,
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 5, 28, 18, 38, 7, 277, DateTimeKind.Local).AddTicks(9160),
+                            CreatedDate = new DateTime(2024, 5, 31, 20, 12, 2, 885, DateTimeKind.Local).AddTicks(4237),
                             Description = "Musteri Takip Projesi",
                             IsActive = true,
                             Name = "MusteriTakip"
                         });
                 });
 
-            modelBuilder.Entity("Nowadays.Core.Entities.Employee", b =>
+            modelBuilder.Entity("EmployeeIssue", b =>
                 {
-                    b.HasOne("Nowadays.Core.Entities.Company", "Company")
-                        .WithMany("Employees")
-                        .HasForeignKey("CompanyId")
+                    b.HasOne("Nowadays.Core.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
+                    b.HasOne("Nowadays.Core.Entities.Issue", null)
+                        .WithMany()
+                        .HasForeignKey("IssuesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Nowadays.Core.Entities.EmployeeProject", b =>
+            modelBuilder.Entity("EmployeeProject", b =>
                 {
-                    b.HasOne("Nowadays.Core.Entities.Employee", "Employee")
-                        .WithMany("EmployeeProjects")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("Nowadays.Core.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Nowadays.Core.Entities.Project", "Project")
-                        .WithMany("EmployeeProjects")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("Nowadays.Core.Entities.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Issue", b =>
@@ -298,25 +291,6 @@ namespace Nowadays.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Nowadays.Core.Entities.IssueEmployee", b =>
-                {
-                    b.HasOne("Nowadays.Core.Entities.Employee", "Employee")
-                        .WithMany("IssueEmployees")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Nowadays.Core.Entities.Issue", "Issue")
-                        .WithMany("IssueEmployees")
-                        .HasForeignKey("IssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Issue");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Project", b =>
@@ -332,27 +306,11 @@ namespace Nowadays.Repository.Migrations
 
             modelBuilder.Entity("Nowadays.Core.Entities.Company", b =>
                 {
-                    b.Navigation("Employees");
-
                     b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("Nowadays.Core.Entities.Employee", b =>
-                {
-                    b.Navigation("EmployeeProjects");
-
-                    b.Navigation("IssueEmployees");
-                });
-
-            modelBuilder.Entity("Nowadays.Core.Entities.Issue", b =>
-                {
-                    b.Navigation("IssueEmployees");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Project", b =>
                 {
-                    b.Navigation("EmployeeProjects");
-
                     b.Navigation("Issues");
                 });
 #pragma warning restore 612, 618

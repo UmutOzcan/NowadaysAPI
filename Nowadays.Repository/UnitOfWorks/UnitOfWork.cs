@@ -1,10 +1,10 @@
 ﻿using Nowadays.Core.Entities;
 using Nowadays.Core.Interfaces.Repositories;
-using Nowadays.Core.Interfaces.UnitOfWork;
+using Nowadays.Core.Interfaces.UnitOfWorks;
 using Nowadays.Repository.Context;
 using Nowadays.Repository.Repositories;
 
-namespace Nowadays.Repository.UnitOfWork;
+namespace Nowadays.Repository.UnitOfWorks;
 
 // Bu pattern, business katmanında yapılan her değişikliğin anlık olarak database e yansıması yerine,
 // işlemlerin toplu halde tek bir kanaldan gerçekleşmesini sağlar.
