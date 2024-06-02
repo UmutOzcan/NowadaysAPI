@@ -2,11 +2,11 @@
 
 public class GetEmployeeResponse
 {
+    public int Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public long NationalIdentity { get; set; }
     public int DateOfBirth { get; set; }
 
-    public string ProjectNames { get; set; } = string.Empty;
-    public string IssueNames {  get; set; } = string.Empty;
+    public int ProjectId { get; set; }
 }

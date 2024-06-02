@@ -14,6 +14,7 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
             Name = "Fix Bug",
             Description = "Check for bugs",
             ProjectId = 1,
+            EmployeeId = 1,
             CreatedDate = DateTime.Now,
             IsActive = true,
         };

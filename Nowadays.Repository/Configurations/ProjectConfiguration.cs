@@ -28,6 +28,6 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             CreatedDate = DateTime.Now,
         };
 
-        builder.HasData(project1);
+        builder.HasData(project1,project2);
     }
 }

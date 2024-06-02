@@ -8,28 +8,32 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Company
-        CreateMap<Company, GetCompanyResponse>()
-            .ForMember(dest => dest.ProjectNames, opt => opt.MapFrom(src => src.Projects != null && src.Projects.Count != 0
-                ? string.Join(", ", src.Projects.Select(p => p.Name))
-                : " - "));
+        // Company mappings
         CreateMap<CreateCompanyRequest, Company>();
         CreateMap<UpdateCompanyRequest, Company>();
+        CreateMap<Company, GetCompanyResponse>()
+            .ForMember(dest => dest.ProjectIds, opt => opt.MapFrom(src => src.Projects.Select(p => p.Id)));
 
-        // Employee 
+        // Project mappings
+        CreateMap<CreateProjectRequest, Project>();
+        CreateMap<UpdateProjectRequest, Project>();
+        CreateMap<Project, GetProjectResponse>()
+            .ForMember(dest => dest.CompanyId, opt => opt.MapFrom(src => src.Company.Id))
+            .ForMember(dest => dest.EmployeeIds, opt => opt.MapFrom(src => src.Employees.Select(e => e.Id)))
+            .ForMember(dest => dest.IssueIds, opt => opt.MapFrom(src => src.Issues.Select(i => i.Id)));
+
+        // Employee mappings
+        CreateMap<CreateEmployeeRequest, Employee>();
+        CreateMap<UpdateEmployeeRequest, Employee>();
         CreateMap<Employee, GetEmployeeResponse>()
-            .ForMember(dest => dest.ProjectNames, opt => opt.MapFrom(src => src.Projects != null && src.Projects.Count != 0
-                ? string.Join(", ", src.Projects.Select(p => p.Name))
-                : " - "))
-            .ForMember(dest => dest.IssueNames, opt => opt.MapFrom(src => src.Issues != null && src.Issues.Count != 0
-                ? string.Join(", ", src.Issues.Select(p => p.Name))
-                : " - ")); ;
-        CreateMap<CreateEmployeeRequest, Employee>()
-            .ForMember(dest => dest.Issues, opt => opt.Ignore())
-            .ForMember(dest => dest.Projects, opt => opt.Ignore());
-        CreateMap<UpdateEmployeeRequest, Employee>()
-            .ForMember(dest => dest.Issues, opt => opt.Ignore())
-            .ForMember(dest => dest.Projects, opt => opt.Ignore());
+            .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.Project.Id));
+
+        // Issue mappings
+        CreateMap<CreateIssueRequest, Issue>();
+        CreateMap<UpdateIssueRequest, Issue>();
+        CreateMap<Issue, GetIssueResponse>()
+            .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.Project.Id))
+            .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.Employee.Id));
 
     }
 }

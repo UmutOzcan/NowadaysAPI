@@ -35,7 +35,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task EmployeeDelete(int id)
     {
-        var employee = await GetById(id) ?? throw new Exception("Şirket bulunamadı!!");
+        var employee = await GetById(id) ?? throw new Exception("Çalışan bulunamadı!!");
         if (employee != null)
         {
             await _unitOfWork.EmployeeRepository.Delete(employee);
@@ -45,12 +45,13 @@ public class EmployeeService : IEmployeeService
 
     public async Task EmployeeUpdate(UpdateEmployeeRequest employee)
     {
-        var updatedEmployee = await GetById(employee.Id) ?? throw new Exception("Şirket Bulunamadı!!");
+        var updatedEmployee = await GetById(employee.Id) ?? throw new Exception("Çalışan Bulunamadı!!");
 
         updatedEmployee.FirstName = employee.FirstName;
         updatedEmployee.LastName = employee.LastName;
         updatedEmployee.NationalIdentity = employee.NationalIdentity;
         updatedEmployee.DateOfBirth = employee.DateOfBirth;
+        updatedEmployee.ProjectId = employee.ProjectId;
 
         await _unitOfWork.EmployeeRepository.UpdateAsync(updatedEmployee);
         await _unitOfWork.CommitAsync();
@@ -58,7 +59,7 @@ public class EmployeeService : IEmployeeService
 
     public IEnumerable<GetEmployeeResponse> GetAll()
     {
-        var employeeList = _unitOfWork.EmployeeRepository.GetAll().Include(x => x.Projects).Include(y => y.Issues).ToList();
+        var employeeList = _unitOfWork.EmployeeRepository.GetAll().Include(x => x.Project).ToList();
 
         return _mapper.Map<List<GetEmployeeResponse>>(employeeList);
     }

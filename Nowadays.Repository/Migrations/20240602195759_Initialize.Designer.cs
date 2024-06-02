@@ -12,8 +12,8 @@ using Nowadays.Repository.Context;
 namespace Nowadays.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240531181549_re-initialize")]
-    partial class reinitialize
+    [Migration("20240602195759_Initialize")]
+    partial class Initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,36 +24,6 @@ namespace Nowadays.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EmployeeIssue", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IssuesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesId", "IssuesId");
-
-                    b.HasIndex("IssuesId");
-
-                    b.ToTable("EmployeeIssue");
-                });
-
-            modelBuilder.Entity("EmployeeProject", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("EmployeeProject");
-                });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Company", b =>
                 {
@@ -87,14 +57,14 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1472),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(2593),
                             IsActive = true,
                             Name = "PortalGroup"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(1485),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(2605),
                             IsActive = true,
                             Name = "Garanti BBVA"
                         });
@@ -134,7 +104,12 @@ namespace Nowadays.Repository.Migrations
                     b.Property<long>("NationalIdentity")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Employees");
 
@@ -142,22 +117,24 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2552),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(3910),
                             DateOfBirth = 2000,
                             FirstName = "Umut",
                             IsActive = true,
                             LastName = "Ozcan",
-                            NationalIdentity = 1234567890L
+                            NationalIdentity = 1234567890L,
+                            ProjectId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(2560),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(3915),
                             DateOfBirth = 1995,
                             FirstName = "Ahmet",
                             IsActive = true,
                             LastName = "Yılmaz",
-                            NationalIdentity = 1234567899L
+                            NationalIdentity = 1234567899L,
+                            ProjectId = 2
                         });
                 });
 
@@ -179,6 +156,9 @@ namespace Nowadays.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -194,6 +174,8 @@ namespace Nowadays.Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Issues");
@@ -202,8 +184,9 @@ namespace Nowadays.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(3437),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(4895),
                             Description = "Check for bugs",
+                            EmployeeId = 1,
                             IsActive = true,
                             Name = "Fix Bug",
                             ProjectId = 1
@@ -252,50 +235,44 @@ namespace Nowadays.Repository.Migrations
                         {
                             Id = 1,
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 5, 31, 21, 15, 49, 254, DateTimeKind.Local).AddTicks(4286),
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(5920),
                             Description = "Musteri Takip Projesi",
                             IsActive = true,
                             Name = "MusteriTakip"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyId = 1,
+                            CreatedDate = new DateTime(2024, 6, 2, 22, 57, 58, 693, DateTimeKind.Local).AddTicks(5924),
+                            Description = "Peak Oyun Projesi",
+                            IsActive = true,
+                            Name = "Oyun Projesi"
                         });
                 });
 
-            modelBuilder.Entity("EmployeeIssue", b =>
+            modelBuilder.Entity("Nowadays.Core.Entities.Employee", b =>
                 {
-                    b.HasOne("Nowadays.Core.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Nowadays.Core.Entities.Project", "Project")
+                        .WithMany("Employees")
+                        .HasForeignKey("ProjectId");
 
-                    b.HasOne("Nowadays.Core.Entities.Issue", null)
-                        .WithMany()
-                        .HasForeignKey("IssuesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EmployeeProject", b =>
-                {
-                    b.HasOne("Nowadays.Core.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Nowadays.Core.Entities.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Nowadays.Core.Entities.Issue", b =>
                 {
+                    b.HasOne("Nowadays.Core.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("Nowadays.Core.Entities.Project", "Project")
                         .WithMany("Issues")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Project");
                 });
@@ -318,6 +295,8 @@ namespace Nowadays.Repository.Migrations
 
             modelBuilder.Entity("Nowadays.Core.Entities.Project", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("Issues");
                 });
 #pragma warning restore 612, 618
