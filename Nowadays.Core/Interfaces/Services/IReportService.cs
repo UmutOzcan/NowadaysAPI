@@ -1,5 +1,7 @@
-﻿namespace Nowadays.Core.Interfaces.Services;
+﻿using Nowadays.Core.DTOs.Responses;
+
+namespace Nowadays.Core.Interfaces.Services;
 public interface IReportService
 {
-    Task<string> GenerateReport();
+    IEnumerable<GetIssueResponse> GenerateReport();
 }

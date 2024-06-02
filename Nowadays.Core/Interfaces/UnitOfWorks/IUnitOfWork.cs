@@ -3,7 +3,7 @@ using Nowadays.Core.Interfaces.Repositories;
 
 namespace Nowadays.Core.Interfaces.UnitOfWorks;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork : IDisposable // UnitOfWork Pattern ensures that transactions are carried out collectively through a single channel, instead of every change being instantly reflected in the database.
 {
     IGenericRepository<Company> CompanyRepository { get; }
     IGenericRepository<Employee> EmployeeRepository { get; }

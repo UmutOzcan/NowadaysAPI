@@ -7,14 +7,14 @@ using Nowadays.Repository.UnitOfWorks;
 
 namespace Nowadays.Repository;
 
-public static class Registration
+public static class Registration // extension method for IServiceCollection to add 'Repository' services
 {
-    //this ile IServiceCollection extension metodu olarak oluşur
+    // created as IServiceCollection extension method with 'this'
     public static void AddRepository(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(opt =>
         opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>(); // Scoped services are created once per client request
     }
 }

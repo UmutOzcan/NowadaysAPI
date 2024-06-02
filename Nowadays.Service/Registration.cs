@@ -9,21 +9,21 @@ namespace Nowadays.Service;
 
 public static class Registration
 {
-    public static void AddService(this IServiceCollection services)
+    public static void AddService(this IServiceCollection services) // extension method for IServiceCollection to add 'Service' services
     {
-        // KPSPublicSoapClient bağımlılığını kaydetme
+        // Registering KPSPublicSoapClient dependency
         services.AddScoped<KPSPublicSoapClient>(provider =>
         {
             return new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
         });
 
-        services.AddScoped<ICompanyService, CompanyService>();
+        services.AddScoped<ICompanyService, CompanyService>(); // Scoped services are created once per client request
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IIssueService, IssueService>();
         services.AddScoped<IReportService, ReportService>();
         services.AddScoped<INationalIdentityVerificationService, NationalIdentityVerificationService>();
 
-        services.AddAutoMapper(typeof(MappingProfile));
+        services.AddAutoMapper(typeof(MappingProfile)); // Mapper 
     }
 }

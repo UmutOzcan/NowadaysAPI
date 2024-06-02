@@ -1,11 +1,9 @@
 ﻿using MernisServisReference;
-using Nowadays.Core.Entities;
 using Nowadays.Core.Interfaces.Services;
-using System;
 
 namespace Nowadays.API.Services;
 
-public class NationalIdentityVerificationService : INationalIdentityVerificationService
+public class NationalIdentityVerificationService : INationalIdentityVerificationService // Citizenship Identity Verification service
 {
     private readonly KPSPublicSoapClient _client;
 

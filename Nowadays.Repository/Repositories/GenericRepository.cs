@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Nowadays.Repository.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class // Repository Pattern simplifies CRUD operations
 {
     private readonly AppDbContext context;
     private DbSet<T> table;
@@ -17,33 +17,28 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task InsertAsync(T entity)
     {
-        entity.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now); // olusturulurken date set ederiz
-        entity.GetType().GetProperty("IsActive").SetValue(entity, true); // aktif et
+        entity.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now); // we set the date property while creating the property.
+        entity.GetType().GetProperty("IsActive").SetValue(entity, true); // could be improved and used
         await table.AddAsync(entity);
         await context.SaveChangesAsync();
     }
 
     public async Task Delete(T entity)
     {
-        entity.GetType().GetProperty("IsActive").SetValue(entity, false); // inaktif yap ?
+        entity.GetType().GetProperty("IsActive").SetValue(entity, false); 
         context.Remove(entity);
         await context.SaveChangesAsync();
     }
 
     public IQueryable<T> GetAll()
     {
-        return table.AsNoTracking().AsQueryable(); // sadece okuma olacagindan tracking i kapatiriz
+        return table.AsNoTracking().AsQueryable(); // since there will only be reading, tracking will be turned off.
     }
 
     public async Task<T> GetByIdAsync(int id)
     {
         return await table.Where(entity => EF.Property<int>(entity, "Id").Equals(id)).SingleOrDefaultAsync();
     }
-
-    //public async Task<IEnumerable<T>> GetWhereListAsync(Expression<Func<T, bool>> filter)
-    //{
-    //    return await table.Where(filter).ToListAsync();
-    //}
 
     public async Task<T> GetWithWhereAsync(Expression<Func<T, bool>> filter = null)
     {
@@ -52,7 +47,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<int> UpdateAsync(T entity)
     {
-        entity.GetType().GetProperty("ModifiedDate").SetValue(entity, DateTime.Now);
+        entity.GetType().GetProperty("ModifiedDate")?.SetValue(entity, DateTime.Now);
         table.Update(entity);
         return await context.SaveChangesAsync();
     }

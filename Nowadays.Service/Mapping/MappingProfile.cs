@@ -4,7 +4,7 @@ using Nowadays.Core.DTOs.Responses;
 using Nowadays.Core.Entities;
 namespace Nowadays.Service.Mapping;
 
-public class MappingProfile : Profile
+public class MappingProfile : Profile // This class defines the AutoMapper configuration for mapping between various request DTOs, response DTOs, and entity classes.
 {
     public MappingProfile()
     {

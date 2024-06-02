@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Nowadays.Core.DTOs.Responses;
 using Nowadays.Core.Interfaces.Services;
 using Nowadays.Core.Interfaces.UnitOfWorks;
 
@@ -16,9 +17,10 @@ public class ReportService : IReportService
         _mapper = mapper;
     }
 
-    public async Task<string> GenerateReport()
+    public IEnumerable<GetIssueResponse> GenerateReport()
     {
-        var issues = await _unitOfWork.IssueRepository.GetAll().ToListAsync();
-        return "Report generated.";
+        var issueList = _unitOfWork.IssueRepository.GetAll().Include(x => x.Project).Include(y => y.Employee).ToList();
+
+        return _mapper.Map<List<GetIssueResponse>>(issueList);
     }
 }

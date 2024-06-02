@@ -4,7 +4,7 @@ using Nowadays.Core.Entities;
 
 namespace Nowadays.Repository.Configurations;
 
-public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+public class CompanyConfiguration : IEntityTypeConfiguration<Company> // Configuration files are used to build database data.
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {

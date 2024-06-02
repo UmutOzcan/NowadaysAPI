@@ -4,7 +4,7 @@ using Nowadays.Core.Entities;
 
 namespace Nowadays.Repository.Configurations;
 
-public class IssueConfiguration : IEntityTypeConfiguration<Issue>
+public class IssueConfiguration : IEntityTypeConfiguration<Issue> // Configuration files are used to build database data.
 {
     public void Configure(EntityTypeBuilder<Issue> builder)
     {

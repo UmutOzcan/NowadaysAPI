@@ -6,12 +6,11 @@ using Nowadays.Repository.Repositories;
 
 namespace Nowadays.Repository.UnitOfWorks;
 
-// Bu pattern, business katmanında yapılan her değişikliğin anlık olarak database e yansıması yerine,
-// işlemlerin toplu halde tek bir kanaldan gerçekleşmesini sağlar.
+// UnitOfWork Pattern ensures that transactions are carried out collectively through a single channel, instead of every change being instantly reflected in the database.
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext context;
-    public bool disposed;
+    public bool disposed; // a flag to indicate whether the object has been disposed
 
     public IGenericRepository<Company> CompanyRepository { get; private set; }
     public IGenericRepository<Employee> EmployeeRepository { get; private set; }
@@ -27,15 +26,15 @@ public class UnitOfWork : IUnitOfWork
         ProjectRepository = new ProjectRepository(context);
     }
 
-    public async Task<int> CommitAsync()
+    public async Task<int> CommitAsync() // method to save changes to the database asynchronously
     {
         return await context.SaveChangesAsync();
     }
 
-    protected virtual void Clean(bool disposing)
+    protected virtual void Clean(bool disposing) // method to clean up resources
     {
-        if (!this.disposed)
-            if (disposing)
+        if (!this.disposed) // check if the object has already been disposed
+            if (disposing) // dispose the context if disposing is true
                 context.Dispose();
 
         this.disposed = true;
@@ -44,6 +43,6 @@ public class UnitOfWork : IUnitOfWork
     public void Dispose()
     {
         Clean(true);
-        GC.SuppressFinalize(this);
+        GC.SuppressFinalize(this); // suppress finalization to optimize garbage collection
     }
 }

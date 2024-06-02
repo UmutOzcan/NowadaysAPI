@@ -11,34 +11,34 @@ public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IEmployeeService employeeService) // Dependency Injection
     {
         _employeeService = employeeService;
     }
 
     [HttpGet]
-    public IActionResult GetEmployees()
+    public IActionResult GetEmployees() // GET
     {
         var employees = _employeeService.GetAll();
         return Ok(employees);
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddEmployee(CreateEmployeeRequest newEmployee)
+    public async Task<IActionResult> AddEmployee(CreateEmployeeRequest newEmployee) // POST
     {
         await _employeeService.EmployeeAdd(newEmployee);
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateEmployee(UpdateEmployeeRequest updateEmployee)
+    public async Task<IActionResult> UpdateEmployee(UpdateEmployeeRequest updateEmployee) // PUT
     {
         await _employeeService.EmployeeUpdate(updateEmployee);
         return Ok(updateEmployee);
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteEmployee(int id)
+    public async Task<IActionResult> DeleteEmployee(int id) // DELETE
     {
         var employee = await _employeeService.GetById(id);
         if (employee == null) return NotFound();

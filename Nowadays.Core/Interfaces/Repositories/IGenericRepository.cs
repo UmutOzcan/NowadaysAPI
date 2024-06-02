@@ -1,9 +1,8 @@
-﻿using Nowadays.Core.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Nowadays.Core.Interfaces.Repositories;
 
-public interface IGenericRepository<T> where T : class
+public interface IGenericRepository<T> where T : class // Repository Pattern simplifies CRUD operations
 {
 
     Task<T> GetByIdAsync(int id);

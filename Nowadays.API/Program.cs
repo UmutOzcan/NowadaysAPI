@@ -11,8 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddRepository(builder.Configuration);
-builder.Services.AddService();
+builder.Services.AddRepository(builder.Configuration); // Repository Layer config - DB config
+builder.Services.AddService(); // service layer config
 
 var app = builder.Build();
 
